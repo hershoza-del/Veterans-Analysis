@@ -1,4 +1,4 @@
-# Veterans-Analysis
+# Veterans Analysis
 
 An analysis on U.S. veterans based on location, SCD compensation, and age for every county in the country.
 
