@@ -28,25 +28,24 @@ An analysis on U.S. veterans based on location, SCD compensation, and age for ev
 
 ## Question 2: How are recipients spread across disability ratings, and do most counties have a majority rated 70%+?
 
-### Tests
-
-**pearson correlation test:**
+### pearson correlation test:
 - 
 - simple linear regression test: 
 
 ### Interpretation
 
+- 
 
+## Question 3: How are service-connected disability (SCD) ratings distributed?
 
-## Question 3: Are veterans under 65 more likely to receive compensation than veterans 65 and older?
+### chi-square goodness-of-fit test:
 
-### Tests
-
-- chi-square goodness-of-fit test:
-- one-sample Wilcoxon signed-rank test: 
+- X² = 1,042,268, df = 4, **p < 2.2e-16**
+- Shares: 0–20%: **19.4%**, 30–40%: **10.5%**, 50–60%: **11.5%**, 70–90%: **29.5%**, 100%: **29.1%**
 
 ### Interpretation
 
+- SCD ratings are not evenly distributed. The biggest observation is that around 59% of all recipients are rated 70% or higher, and more than a quarter is rated 100%. The middle groups (30–60%) are the smallest. According to Census Bureau data and VA reports, the cluster of high SCD ratings have been driven heavily by veterans in the Afghanistan and Iraq Wars. Ratings of 70% or higher surged from around 27% in 2008 to around 50% in 2022.
 
 ## Data Source
 
