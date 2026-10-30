@@ -17,7 +17,7 @@ An analysis on U.S. veterans based on location, SCD compensation, and age for ev
 
 ### Tests
 
-
+- **paired Wilcoxon signed-rank test:** - Median % under 65: 54.3%; Median % 65 and older; 45.7%; Wilcoxon V = 3,267,471, p < 2.2e-16
 
 ### Interpretation
 
@@ -27,7 +27,8 @@ An analysis on U.S. veterans based on location, SCD compensation, and age for ev
 
 ### Tests
 
-
+- pearson correlation test: 
+- simple linear regression test: 
 
 ### Interpretation
 
@@ -37,7 +38,8 @@ An analysis on U.S. veterans based on location, SCD compensation, and age for ev
 
 ### Tests
 
-
+- chi-square goodness-of-fit test:
+- one-sample Wilcoxon signed-rank test: 
 
 ### Interpretation
 
