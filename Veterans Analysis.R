@@ -7,7 +7,7 @@
 
 > counties <- df %>% filter(!`States/Territories` %in% c("Puerto Rico", + "Other Foreign Countries", "US Territories (excluding Puerto Rico)", "Unknown"))
  
-> # ---- Question 1: Age (boxplot) ----
+> # ---- Age (boxplot) ----
 
 > q1 <- counties %>%
   +     filter(`County Veteran Population` >= 100) %>%
@@ -34,7 +34,7 @@
   > boxplot(q1$pct_under65, q1$pct_65plus, names = c("Under 65", "65 and older"),
             +         ylab = "% of county recipients")
 
-> # ---- Question 2: States (scatterplot) ----
+> # ---- States (scatterplot) ----
   
 > states <- counties %>% group_by(`States/Territories`) %>%
   +     summarise(veterans   = sum(`County Veteran Population`, na.rm = TRUE),
@@ -152,7 +152,7 @@ F-statistic: 875.9 on 1 and 49 DF,  p-value: < 0.00000000000000022
 +     labs(x = "Veteran population", y = "Disability compensation recipients")
 `geom_smooth()` using formula = 'y ~ x'
 
-> # ---- Question 3: Ratings (bar chart) ----
+> # ---- Ratings (bar chart) ----
 
 > rating_cols <- c("0-20% SCD rating", "30-40% SCD rating", "50-60% SCD rating",
 +                  "70-90% SCD rating", "100% SCD rating")
