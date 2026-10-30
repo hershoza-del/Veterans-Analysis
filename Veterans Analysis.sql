@@ -2,7 +2,35 @@
 
 SELECT * FROM data.veterans_analysis_sql;
 
-# Question 1: Which states are veterans more or less likely to recieve compensation than expected?
+# Are disability compensation recipients mostly younger or older veterans?
+
+SELECT
+    SUM(`Ages 17-44`) + SUM(`Ages 45-64`)                  AS recipients_under_65,
+    SUM(`Ages 65+`)                                        AS recipients_65_plus,
+    ROUND( (SUM(`Ages 17-44`) + SUM(`Ages 45-64`)) * 100.0
+         / (SUM(`Ages 17-44`) + SUM(`Ages 45-64`) + SUM(`Ages 65+`)), 1)
+                                                           AS pct_under_65
+FROM data.veterans_analysis_sql
+WHERE `States/Territories` NOT IN ('Puerto Rico', 'Other Foreign Countries',
+                                   'US Territories (excluding Puerto Rico)', 'Unknown');
+
+SELECT
+    CASE
+        WHEN `Ages 17-44` + `Ages 45-64` > `Ages 65+` THEN 'Mostly under 65'
+        WHEN `Ages 17-44` + `Ages 45-64` < `Ages 65+` THEN 'Mostly 65 and older'
+        ELSE 'Tied'
+    END       AS county_group,
+    COUNT(*)  AS number_of_counties
+FROM data.veterans_analysis_sql
+WHERE `States/Territories` NOT IN ('Puerto Rico', 'Other Foreign Countries',
+                                   'US Territories (excluding Puerto Rico)', 'Unknown')
+  AND `County Veteran Population` >= 100
+  AND `Ages 17-44` IS NOT NULL
+  AND `Ages 45-64` IS NOT NULL
+  AND `Ages 65+`   IS NOT NULL
+GROUP BY county_group;
+
+# Do states with more veterans have more disability compensation recipients?
 
 SELECT
     `States/Territories`                                         AS State,
@@ -40,7 +68,7 @@ FROM (
 ) AS state_rates
 ORDER BY per_100_veterans DESC;
 
-# Question 2: How are recipients distributed across disability ratings? Do most counties have a majority rated 70%+?
+# How are service-connected disability (SCD) ratings distributed?
 
 SELECT
     SUM(`0-20% SCD rating`)   AS rated_0_20,
@@ -70,34 +98,6 @@ WHERE `States/Territories` NOT IN ('Puerto Rico', 'Other Foreign Countries',
   AND `50-60% SCD rating` IS NOT NULL
   AND `70-90% SCD rating` IS NOT NULL
   AND `100% SCD rating`   IS NOT NULL
-GROUP BY county_group;
-
-# Question 3: Are veterans under 65 more likely to receive compensation than veterans 65 and older?
-
-SELECT
-    SUM(`Ages 17-44`) + SUM(`Ages 45-64`)                  AS recipients_under_65,
-    SUM(`Ages 65+`)                                        AS recipients_65_plus,
-    ROUND( (SUM(`Ages 17-44`) + SUM(`Ages 45-64`)) * 100.0
-         / (SUM(`Ages 17-44`) + SUM(`Ages 45-64`) + SUM(`Ages 65+`)), 1)
-                                                           AS pct_under_65
-FROM data.veterans_analysis_sql
-WHERE `States/Territories` NOT IN ('Puerto Rico', 'Other Foreign Countries',
-                                   'US Territories (excluding Puerto Rico)', 'Unknown');
-
-SELECT
-    CASE
-        WHEN `Ages 17-44` + `Ages 45-64` > `Ages 65+` THEN 'Mostly under 65'
-        WHEN `Ages 17-44` + `Ages 45-64` < `Ages 65+` THEN 'Mostly 65 and older'
-        ELSE 'Tied'
-    END       AS county_group,
-    COUNT(*)  AS number_of_counties
-FROM data.veterans_analysis_sql
-WHERE `States/Territories` NOT IN ('Puerto Rico', 'Other Foreign Countries',
-                                   'US Territories (excluding Puerto Rico)', 'Unknown')
-  AND `County Veteran Population` >= 100
-  AND `Ages 17-44` IS NOT NULL
-  AND `Ages 45-64` IS NOT NULL
-  AND `Ages 65+`   IS NOT NULL
 GROUP BY county_group;
 
 # separate join function
